@@ -13,7 +13,7 @@ var pubChannel = null;
 var offlinePubQueue = [];
 
 
-function start() { /* jshint ignore: line */
+function start() {
   ampq.connect(config("CLOUDAMQP_URL") + "?heartbeat=60", function establishConnection(err, connection) {
     if (err) {
       logger.error("Error while establishing connection to the AMQP instance; retry will be attempted; error:", err);
@@ -47,7 +47,7 @@ function whenConnected() {
   startConsumer();
 }
 
-function startPublisher() { /* jshint ignore: line */
+function startPublisher() {
   /* opens a channel using the confirmation mode which requires each published message to be acked or nacked */
   amqpConnection.createConfirmChannel(function establishChannelOnConnection(err, channel) {
     if (closeOnErr(err)) {
@@ -94,7 +94,7 @@ function publish(exchange, routingKey, content) {
   }
 }
 
-function startConsumer() { /* jshint ignore: line */
+function startConsumer() {
   amqpConnection.createChannel(function (err, channel) {
     if (closeOnErr(err)) {
       return;
@@ -153,7 +153,7 @@ function closeOnErr(err) {
   return true;
 }
 
-function startPublishingMessages() { /* jshint ignore: line */
+function startPublishingMessages() {
   var i = 0;
   setInterval(function() {
     publish("", "jobs", new Buffer("Message #" + i + " published at " + getCurrentTime()));
